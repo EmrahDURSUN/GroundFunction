@@ -1,0 +1,13 @@
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.exe
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.deps.json
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.runtimeconfig.json
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.runtimeconfig.dev.json
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.dll
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.pdb
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.csprojAssemblyReference.cache
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.csproj.CoreCompileInputs.cache
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.AssemblyInfoInputs.cache
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.AssemblyInfo.cs
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.dll
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.pdb
+E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.genruntimeconfig.cache
