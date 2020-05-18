@@ -33,9 +33,9 @@ namespace GrouındCreaTOR
             //int ZDepth = 100;
             //int NodeSize = 20;
 
-            int XWidth = 120;
-            int YHeight = 60;
-            int ZDepth = 40;
+            int XWidth = 180;
+            int YHeight = 400;
+            int ZDepth = 160;
             int NodeSize = 20;
 
 
@@ -55,8 +55,12 @@ namespace GrouındCreaTOR
 
             Console.WriteLine("Xsize= " + XSize + "\n XSteps=" + XSteps + "\n YSize=" + YSize + "\n YSteps=" + YSteps + "\n ZSize=" + ZSize + "\n ZSteps=" + ZSteps + "\n Total Number Of Points=" + TotalNumberOfPoints);
 
-            var filePath1 = @"E:\A\P1\Latex\csv1.csv";
-            var filePath2 = @"E:\A\P1\Latex\csv2.csv";
+            var filePath = @"E:\\A\\P1\\Latex\\PdfTest39.tex";
+            var filePath1 = @"E:\\A\\P1\\Latex\\csv1_39.csv";
+            var filePath2 = @"E:\\A\\P1\\Latex\\csv2_39.csv";
+            var filePathTarget = @"E:\\A\\Latex\\P1\\Latex\\";
+            var filePath3 = @"E:\\A\\P1\\Latex\\readyCode_39.csv";
+            
 
             // Creating Coordinate Points
             using FileStream fs0 = new FileStream(filePath2, FileMode.Append);
@@ -1179,6 +1183,54 @@ namespace GrouındCreaTOR
                             }
                         }
                     }
+                }
+            }
+
+            // Final Operation
+            using FileStream fs12 = new FileStream(filePath3, FileMode.Append);
+            {
+                using StreamWriter sw = new StreamWriter(fs12);
+                {
+                    int X = XSize, Y = YSize, Z = ZSize;
+
+                    int Xinc = (XSteps - 1) * X;
+                    int Yinc = (YSteps - 1) * Y;
+                    int Zinc = (ZSteps - 1) * Z;
+
+                    int topSurfStart = Yinc + 1;
+
+                    int columnX = XSteps;
+                    int rowY = YSteps;
+                    int plane = ZSteps;
+
+                    int valueForce = 5, scalingHightForces = 2, scalingWidthForcesi = 2, scalingBeams = 2;
+                
+
+                    //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
+                    // Selecting Centor Points
+                    int[,] grid = new int[plane,columnX];
+
+                    sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {XSteps * ZSteps}");       
+                    
+                    for (int j = 0; j < plane; j++)
+                    {
+                        for (int k = 0; k < columnX; k++)
+                        {
+                                grid[j,k] = topSurfStart;
+                                topSurfStart++;
+
+                            sw.Write($" P{grid[j, k]}");
+                        }
+                        topSurfStart += Yinc;
+                    } 
+                    
+                    for (int k = 0; k < XSteps * ZSteps; k++)
+                    {
+                        sw.Write($" {valueForce}");
+                    }
+
+                    sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {filePath} {filePath1} {filePath2} {filePathTarget}");
+                    
                 }
             }
         }
