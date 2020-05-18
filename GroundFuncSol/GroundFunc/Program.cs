@@ -23,15 +23,15 @@ namespace GrouındCreaTOR
             //Console.WriteLine("Enter Node Size");
             //int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
-            //int XWidth = 120;
-            //int YHeight = 80;
-            //int ZDepth = 80;
-            //int NodeSize = 20;
-
-            int XWidth = 100;
-            int YHeight = 100;
-            int ZDepth = 100;
+            int XWidth = 120;
+            int YHeight = 80;
+            int ZDepth = 60;
             int NodeSize = 20;
+
+            //int XWidth = 100;
+            //int YHeight = 100;
+            //int ZDepth = 100;
+            //int NodeSize = 20;
 
             Console.WriteLine(XWidth + " " + YHeight + " " + ZDepth + " " + NodeSize);
 
@@ -49,15 +49,52 @@ namespace GrouındCreaTOR
 
             Console.WriteLine("Xsize= " + XSize + "\n XSteps=" + XSteps + "\n YSize=" + YSize + "\n YSteps=" + YSteps + "\n ZSize=" + ZSize + "\n ZSteps=" + ZSteps + "\n Total Number Of Points=" + TotalNumberOfPoints);
 
-            //int CalStartPoint = 0;
-            //int CalEndPoint = 0;
+            var filePath1 = @"E:\A\P1\Latex\csv1.csv";
+            var filePath2 = @"E:\A\P1\Latex\csv2.csv";
 
-            var filePath = @"E:\B\Latex\csv1.csv";
+            // Creating Coordinate Points
+            using FileStream fs0 = new FileStream(filePath2, FileMode.Append);
+            {
+                using StreamWriter sw = new StreamWriter(fs0);
+                {
+                    int columnX = XSteps;
+                    int rowY = YSteps;
+                    int plane = ZSteps;
 
-            Console.WriteLine("Hello World 1 ");
+                    int X = XSize, Y = YSize, Z = ZSize;
+
+                    //int Xinc = (XSteps - 1) * X;
+                    //int Yinc = (YSteps - 1) * Y;
+                    //int Zinc = (ZSteps - 1) * Z;
+
+                    //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
+
+                    // Selecting Centor Points
+
+                    int[,,] grid = new int[ZSteps, YSteps, XSteps];
+               
+                    int po = 1, orx = 0, ory = 0, orz = 0;
+                    for (int a = 0; a < plane ; a++)
+                    {
+                        for (int b = 0; b < rowY; b++)
+                        {
+                            for (int c = 0; c < columnX; c++)
+                            {
+                                sw.WriteLine($"P{po};{orx};{ory};{orz}");
+                                orx += NodeSize;
+                                po++;                                
+                            }
+                            orx = 0 ;
+                            ory += NodeSize;                            
+                        }
+                        ory = 0;
+                        orz += NodeSize;
+                    }
+                }
+            }
 
             // X DIRECTION INCREASE
-            using FileStream fs1 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs1 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs1);
                 {
@@ -83,7 +120,7 @@ namespace GrouındCreaTOR
                 }
             }
             // Y DIRECTION INCREASE
-            using FileStream fs2 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs2 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw2 = new StreamWriter(fs2);
                 {
@@ -108,7 +145,7 @@ namespace GrouındCreaTOR
                 }
             }
             // Z DIRECTION INCREASE
-            using FileStream fs3 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs3 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw3 = new StreamWriter(fs3);
                 {
@@ -129,7 +166,7 @@ namespace GrouındCreaTOR
             }
 
             //  Inner Point 26 operation
-            using FileStream fs4 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs4 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs4);
                 {
@@ -209,7 +246,7 @@ namespace GrouındCreaTOR
             }
 
             //  Corners
-            using FileStream fs5 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs5 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs5);
                 {
@@ -223,7 +260,7 @@ namespace GrouındCreaTOR
                     int Xinc = (XSteps - 1) * X;
                     int Yinc = (YSteps - 1) * Y;
                     int Zinc = (ZSteps - 1) * Z;
-                    Console.WriteLine("Depth= " + plane + " Rows = " + rowY + " Columns = " + columnX + "\n" + Yinc);
+                    Console.WriteLine("Dkjhhhhhhhhhhhhhhhhhhepth= " + plane + " Rows = " + rowY + " Columns = " + columnX + "\n" + Yinc);
                     // Selecting Corner Points
                     int[,,] grid = new int[plane, rowY, columnX];
                     for (int i = 0; i < plane; i++)
@@ -236,7 +273,6 @@ namespace GrouındCreaTOR
 
                                 if (grid[i, j, k] == 1)  // Front Left Down
                                 {
-                                    // Console.WriteLine(CornerStart + " ; " + grid[i, j, k] + X);
                                     int first = grid[i, j, k] + X       ; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two   = grid[i, j, k] + Y       ; string fullText2 = (grid[i, j, k] + ";" + two   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[i, j, k] + Z       ; string fullText3 = (grid[i, j, k] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -245,9 +281,9 @@ namespace GrouındCreaTOR
                                     int six   = grid[i, j, k] + Y + Z   ; string fullText6 = (grid[i, j, k] + ";" + six   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText6);
                                     int seven = grid[i, j, k] + X + Y +Z; string fullText7 = (grid[i, j, k] + ";" + seven + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText7);                                    
                                 }
+
                                 if (grid[i, j, k] == XSteps) // Front Right Down
                                 {
-                                   // X = (X * (-1));
                                     int first = grid[i, j, k] - X       ; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two   = grid[i, j, k] + Y       ; string fullText2 = (grid[i, j, k] + ";" + two   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[i, j, k] + Z       ; string fullText3 = (grid[i, j, k] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -256,9 +292,10 @@ namespace GrouındCreaTOR
                                     int six   = grid[i, j, k] + Y + Z   ; string fullText6 = (grid[i, j, k] + ";" + six   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText6);
                                     int seven = grid[i, j, k] - X + Y +Z; string fullText7 = (grid[i, j, k] + ";" + seven + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText7);   
                                 }
+
                                 if (grid[i, j, k] == Yinc + 1) // Front Left Up
                                 {
-                                    //Y = (Y * (-1));
+                                    
                                     int first = grid[i, j, k] + X       ; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two   = grid[i, j, k] - Y       ; string fullText2 = (grid[i, j, k] + ";" + two   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[i, j, k] + Z       ; string fullText3 = (grid[i, j, k] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -270,7 +307,8 @@ namespace GrouındCreaTOR
 
                                 if (grid[i, j, k] == YSteps * XSteps) // Front Right Up
                                 {
-                                   // X = (X * (-1)); Y = (Y * (-1));
+                                    //Console.WriteLine($" be care fulllllllllllllllllll   =  {grid[i, j, k]}  ");
+                                    // X = (X * (-1)); Y = (Y * (-1));
                                     int first = grid[i, j, k] - X       ; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two   = grid[i, j, k] - Y       ; string fullText2 = (grid[i, j, k] + ";" + two   + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[i, j, k] + Z       ; string fullText3 = (grid[i, j, k] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -336,7 +374,7 @@ namespace GrouındCreaTOR
             }
 
             //  Front - Back Surface Mid 17 operations
-            using FileStream fs6 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs6 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs6);
                 {
@@ -455,7 +493,7 @@ namespace GrouındCreaTOR
             }
 
             //  Left - Right Surface Mid 17 operations
-            using FileStream fs7 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs7 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs7);
                 {
@@ -572,7 +610,7 @@ namespace GrouındCreaTOR
             }
 
             //  Bottom - Up Surface Mid 17 operations
-            using FileStream fs8 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs8 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs8);
                 {
@@ -687,7 +725,7 @@ namespace GrouındCreaTOR
             }
 
              //  Front-Back Bottom-Up 11 operations
-            using FileStream fs9 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs9 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs9);
                 {
@@ -862,7 +900,7 @@ namespace GrouındCreaTOR
             }
 
             //  Front-Back Bottom-Up 11 operations
-            using FileStream fs10 = new FileStream(filePath, FileMode.Append);
+            using FileStream fs10 = new FileStream(filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs10);
                 {
