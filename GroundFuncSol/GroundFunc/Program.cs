@@ -23,15 +23,15 @@ namespace GrouındCreaTOR
             //Console.WriteLine("Enter Node Size");
             //int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
-            int XWidth = 120;
-            int YHeight = 80;
-            int ZDepth = 60;
-            int NodeSize = 20;
-
-            //int XWidth = 100;
-            //int YHeight = 100;
-            //int ZDepth = 100;
+            //int XWidth = 120;
+            //int YHeight = 80;
+            //int ZDepth = 80;
             //int NodeSize = 20;
+
+            int XWidth = 100;
+            int YHeight = 100;
+            int ZDepth = 100;
+            int NodeSize = 20;
 
             Console.WriteLine(XWidth + " " + YHeight + " " + ZDepth + " " + NodeSize);
 
@@ -686,7 +686,7 @@ namespace GrouındCreaTOR
                 }
             }
 
-             //  Fronk-Back Bottom-Up 11 operations
+             //  Front-Back Bottom-Up 11 operations
             using FileStream fs9 = new FileStream(filePath, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs9);
@@ -853,6 +853,179 @@ namespace GrouındCreaTOR
                                 //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
                                 //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
                                 //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //  Front-Back Bottom-Up 11 operations
+            using FileStream fs10 = new FileStream(filePath, FileMode.Append);
+            {
+                using StreamWriter sw = new StreamWriter(fs10);
+                {
+                    int corfaceStart = ( XSteps * YSteps ) + 1;
+
+                    int columnZ = ZSteps - 2;
+                    int rowY = 2;
+                    int plane = 2;
+
+                    int X = XSize, Y = YSize, Z = ZSize;
+
+                    int Xinc = (XSteps - 1) * X;
+                    int Yinc = (YSteps - 1) * Y;
+                    int Zinc = (ZSteps - 1) * Z;
+
+                    //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
+                    // Selecting Centor Points
+
+                    int[,,] grid = new int[plane, columnZ, rowY];
+
+                    for (int i = 0; i < plane; i++)
+                    {
+                        for (int j = 0; j < columnZ ; j++)
+                        {
+                            for (int k = 0; k < rowY ; k++)
+                            {
+                                grid[i, j, k] = corfaceStart;
+                                corfaceStart += Yinc; ;
+                                Console.Write(grid[i, j, k] + " ; ");
+                            }
+                            //corfaceStart += (YSteps - 2) * Y + 2;
+                            Console.WriteLine(" BEFORE operation =  " + Z);
+                            corfaceStart = corfaceStart +  Z + (-2 * Yinc);
+                            Console.WriteLine(" Corface First Plane is over =  " + corfaceStart);
+                        }
+                        corfaceStart = (grid[0, 0, 0] + Xinc);
+                        Console.WriteLine(" Corface Front Back Bottom Up is done");
+                    }
+
+                    // Creating every possible beam from inner points
+                    for (int a = 0; a < plane; a++)
+                    {
+                        for (int b = 0; b < columnZ ; b++)
+                        {
+                            for (int c = 0; c < rowY ; c++)
+                            {
+                                if (a == 0 && c == 0 )
+                                {
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                }                               
+                                                       
+                                if (a == 0 && c == 1 )
+                                {
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                }
+
+                                if (a == 1 && c == 0 )
+                                {
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                }
+
+                                if (a == 1 && c == 1 )
+                                {
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
                                 }
                             }
