@@ -23,8 +23,7 @@ namespace GrouındCreaTOR
             //Console.WriteLine("Enter Node Size");
             //int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
-            public const int verzion = 51;
-
+            public const string verzion = "OnlyLeftRightMidSurface";
             public static string filePath = $@"E:\\A\\P1\\Latex\\PdfTest";
             public static string filePath1 = @"E:\\A\\P1\\Latex\\csv1_";
             public static string filePath2 = "E:\\A\\P1\\Latex\\csv2_";
@@ -34,8 +33,8 @@ namespace GrouındCreaTOR
             // global int
 
             public static int XWidth = 120;
-            public static int YHeight = 60;
-            public static int ZDepth = 160;
+            public static int YHeight = 80;
+            public static int ZDepth = 140;
             public static int NodeSize = 20;
 
             public static int X = 1;
@@ -56,30 +55,31 @@ namespace GrouındCreaTOR
             // global function
             public static string HelloWorld()
             {
-                return "Hello World";
+                return "Hello Hennrick";
             }
         }
 
         static void Main(string[] args)
         {           
-            CoordinateCrator();
+           CoordinateCreator();
 
-           // CenterPointCreator();            
-            Corners();
-            
-            FronBackMidSurface();
+            // CenterPointCreator();
+            //Corners();
+
+            //FronBackMidSurface();
             LeftRightMidSurface();
-            BottomUpMidSurface();
 
-            DepthEdges();
-            HorizontalEgdes();
-            VerticalEdges();
-            
+            //BottomUpMidSurface();  // Problem here
+
+            //DepthEdges();
+            //HorizontalEgdes();
+            //VerticalEdges();
+
             ExecuHelper();
             
         }
         // Csv 2 File equivalent Coordinate Points Hinges
-        private static void CoordinateCrator()
+        private static void CoordinateCreator()
         {
             string filePath2 = $@"{Globals.filePath2}{Globals.verzion}.csv";  // Thats CSV2 locations
 
@@ -1244,7 +1244,7 @@ namespace GrouındCreaTOR
                     int rowY = YSteps;
                     int plane = ZSteps;
 
-                    int valueForce = 5, scalingHightForces = 2, scalingWidthForcesi = 2, scalingBeams = 2;
+                    int valueForce = 4, scalingHightForces = 3, scalingWidthForcesi = 3, scalingBeams = 3;
 
 
                     //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
