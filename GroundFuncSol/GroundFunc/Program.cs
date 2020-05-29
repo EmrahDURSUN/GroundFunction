@@ -23,18 +23,18 @@ namespace GrouındCreaTOR
             //Console.WriteLine("Enter Node Size");
             //int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
-            public const string verzion = "All";
+            public const string verzion = "3DProto01";
             public static string filePath = $@"E:\\A\\P1\\Latex\\PdfTest";
             public static string filePath1 = @"E:\\A\\P1\\Latex\\csv1_";
             public static string filePath2 = "E:\\A\\P1\\Latex\\csv2_";
-            public static string filePathTarget = @"E:\\A\\Latex\\P1\\Latex\\";
+            public static string filePathTarget = @"E:\\A\\P1\\Latex\\";
             public static string filePath3 = @"E:\\A\\P1\\Latex\\readyCode_";
 
             // global int
 
-            public static int XWidth = 120;
-            public static int YHeight = 80;
-            public static int ZDepth = 140;
+            public static int XWidth = 100;
+            public static int YHeight = 60;
+            public static int ZDepth = 100;
             public static int NodeSize = 20;
 
             public static int X = 1;
@@ -42,15 +42,16 @@ namespace GrouındCreaTOR
 
             public static int Y = XSteps;
             public static int YSteps = ((YHeight + NodeSize) / NodeSize);
-
-            public static int Z = ((YHeight + NodeSize) / NodeSize) * XSteps;
+            
             public static int ZSteps = (ZDepth + NodeSize) / NodeSize;
+            public static int Z = YSteps * XSteps;
+            
 
             public static int TotalNumberOfPoints = XSteps * YSteps * ZSteps;
 
-            public static  int Xinc = (XSteps - 1) * X;
-            public static  int Yinc = (YSteps - 1) * Y;
-            public static  int Zinc = (ZSteps - 1) * Z;
+            public static int Xinc = (XSteps - 1) * X;
+            public static int Yinc = (YSteps - 1) * Y;
+            public static int Zinc = (ZSteps - 1) * Z;
 
             // global function
             public static string HelloWorld()
@@ -60,24 +61,42 @@ namespace GrouındCreaTOR
         }
 
         static void Main(string[] args)
-        {           
-           CoordinateCreator();
+        {
+            Console.WriteLine($" {Globals.XSteps} , {Globals.YSteps} + {Globals.ZSteps}");
+            
+            CoordinateCreator();
 
             CenterPointCreator();
             Corners();
 
-            FronBackMidSurface();
-            LeftRightMidSurface();
-            BottomUpMidSurface();
-
-            DepthEdges();
-            HorizontalEdges();       
-            VerticalEdges();
-
+            if (Globals.XSteps > 2 && Globals.YSteps > 2 ) 
+            {
+                FronBackMidSurface();                      
+            }
+            if (Globals.YSteps > 2 && Globals.ZSteps > 2)
+            {                
+                LeftRightMidSurface();               
+            }
+            if (Globals.XSteps > 2 && Globals.YSteps > 2 && Globals.ZSteps > 2)
+            {
+                BottomUpMidSurface();
+            }
+            if ( Globals.ZSteps > 2)
+            {
+               DepthEdges();
+            }
+            if (Globals.XSteps > 2 )
+            {
+                HorizontalEdges();
+            }
+            if ( Globals.YSteps > 2 )
+            {
+               VerticalEdges();
+            } 
             ExecuHelper();
             
         }
-        // Csv 2 File equivalent Coordinate Points Hinges
+        // Csv 2 File equivalent to Coordinate Points Hinges
         private static void CoordinateCreator()
         {
             string filePath2 = $@"{Globals.filePath2}{Globals.verzion}.csv";  // Thats CSV2 locations
@@ -116,6 +135,7 @@ namespace GrouındCreaTOR
             }
         }
 
+        // Corners of Ground Structure
         private static void Corners() 
         {
             string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
@@ -330,6 +350,8 @@ namespace GrouındCreaTOR
                 }
             }      
         }
+
+        // Surfaces
         private static void FronBackMidSurface() 
         {
             string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
@@ -683,6 +705,7 @@ namespace GrouındCreaTOR
             }
         }
         
+        // Edges
         private static void DepthEdges()
         {
             string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
@@ -1213,7 +1236,8 @@ namespace GrouındCreaTOR
                 }
             }
         }
-        // Final Operation
+
+        // Help File Creation
         private static void ExecuHelper()
         {
             string filePath = $@"{Globals.filePath}{Globals.verzion}.tex";      // Location anf Name of the Tex file
@@ -1244,7 +1268,9 @@ namespace GrouındCreaTOR
                     // Selecting Centor Points
                     int[,] grid = new int[plane, columnX];
 
-                    sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {XSteps * ZSteps}");
+                    int numberOfLoads = XSteps * ZSteps;
+
+                    sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {numberOfLoads}");
 
                     for (int j = 0; j < plane; j++)
                     {
