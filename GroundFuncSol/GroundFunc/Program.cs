@@ -25,7 +25,7 @@ namespace GrouındCreaTOR
 
                 // If user will enter dimentions, this four input must coment-out
             // global int
-            public static int XWidth = 60;
+            public static int XWidth = 160;
             public static int YHeight = 60;
             public static int ZDepth = 100;
             public static int NodeSize = 20;
@@ -43,9 +43,24 @@ namespace GrouındCreaTOR
             public static int Yinc = (YSteps - 1) * Y;
             public static int Zinc = (ZSteps - 1) * Z;
 
-
-            public static string n = string.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);
-            //File.WriteAllText(n, "aaa");
+            //string n = string.Format("text-{0:yyyy-MM-dd_hh-mm-ss-tt}.bin",DateTime.Now);File.WriteAllText(n, "aaa");
+            public static string n = string.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);           
+            
+            /*
+                   "text-{0:yyyy-MM-dd_hh-mm-ss-tt}.bin"
+                   text-      The first part of the output required
+                   Files will all start with text-
+                   {0:        Indicates that this is a string placeholder
+                   The zero indicates the index of the parameters inserted here
+                   yyyy-      Prints the year in four digits followed by a dash
+                   This has a "year 10000" problem
+                   MM-        Prints the month in two digits
+                   dd_ Prints the day in two digits followed by an underscore
+                   hh-        Prints the hour in two digits
+                   mm-        Prints the minute, also in two digits
+                   ss-        As expected, it prints the seconds
+                   tt         Prints AM or PM depending on the time of day
+            */
 
             //static string SpecialFileName
             //{
@@ -56,8 +71,8 @@ namespace GrouındCreaTOR
             //}
             //public static string filePath5 = $@"{SpecialFileName}";
 
-            public static string filePath = $@"E:\\A\\P1\\Latex\\A";
-            public static string verzion = $"{XWidth}_{YHeight}_{ZDepth}.csv";
+            public static string filePath = $@"E:\\A\\P1\\Latex\\";
+            public static string verzion = $"{XWidth}_{YHeight}_{ZDepth}";
 
             public static string filePath1 = $@"{filePath}\\{n}_{verzion}_csv1.csv";    // CSV1
             public static string filePath2 = $@"{filePath}\\{n}_{verzion}_csv2.csv";    // CSV2
