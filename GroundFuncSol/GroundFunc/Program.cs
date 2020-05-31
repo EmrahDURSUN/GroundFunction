@@ -13,39 +13,29 @@ namespace GrouındCreaTOR
         // static class to hold global variables, etc.
         static class Globals
         {
+            // Uncomment below if you want, the user to enter Dimentions
+            ////Console.WriteLine("Enter width");
+            //public static int XWidth = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter height");
+            //public static int YHeight = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter depth");
+            //public static int ZDepth = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter Node Size");
+            //public static int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
-            //Console.WriteLine("Enter width");
-            //int XWidth = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter height");
-            //int YHeight = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter depth");
-            //int ZDepth = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter Node Size");
-            //int NodeSize = Convert.ToInt32(Console.In.ReadLine());
-
-            public const string verzion = "3DProto01";
-            public static string filePath = $@"E:\\A\\P1\\Latex\\PdfTest";
-            public static string filePath1 = @"E:\\A\\P1\\Latex\\csv1_";
-            public static string filePath2 = "E:\\A\\P1\\Latex\\csv2_";
-            public static string filePathTarget = @"E:\\A\\P1\\Latex\\";
-            public static string filePath3 = @"E:\\A\\P1\\Latex\\readyCode_";
-
+                // If user will enter dimentions, this four input must coment-out
             // global int
-
-            public static int XWidth = 100;
+            public static int XWidth = 60;
             public static int YHeight = 60;
             public static int ZDepth = 100;
             public static int NodeSize = 20;
 
             public static int X = 1;
             public static int XSteps = (XWidth + NodeSize) / NodeSize;
-
             public static int Y = XSteps;
-            public static int YSteps = ((YHeight + NodeSize) / NodeSize);
-            
+            public static int YSteps = ((YHeight + NodeSize) / NodeSize);            
             public static int ZSteps = (ZDepth + NodeSize) / NodeSize;
-            public static int Z = YSteps * XSteps;
-            
+            public static int Z = YSteps * XSteps;            
 
             public static int TotalNumberOfPoints = XSteps * YSteps * ZSteps;
 
@@ -53,56 +43,56 @@ namespace GrouındCreaTOR
             public static int Yinc = (YSteps - 1) * Y;
             public static int Zinc = (ZSteps - 1) * Z;
 
+
+            public static string n = string.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);
+            //File.WriteAllText(n, "aaa");
+
+            //static string SpecialFileName
+            //{
+            //    get
+            //    {
+            //        return string.Format("{0}{1}text-{2:yyyy-MM-dd_hh-mm-ss-tt}.txt",Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),Path.DirectorySeparatorChar,DateTime.Now);
+            //    }
+            //}
+            //public static string filePath5 = $@"{SpecialFileName}";
+
+            public static string filePath = $@"E:\\A\\P1\\Latex\\A";
+            public static string verzion = $"{XWidth}_{YHeight}_{ZDepth}.csv";
+
+            public static string filePath1 = $@"{filePath}\\{n}_{verzion}_csv1.csv";    // CSV1
+            public static string filePath2 = $@"{filePath}\\{n}_{verzion}_csv2.csv";    // CSV2
+            public static string filePath3 = $@"{filePath}\\{n}_{verzion}_csv3Helper.csv";    // Helper
+            public static string filePathTarget = $@"{filePath}";
+
             // global function
             public static string HelloWorld()
             {
+                //Console.WriteLine(SpecialFileName);
                 return "Hello Hennrick";
             }
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine($" {Globals.XSteps} , {Globals.YSteps} + {Globals.ZSteps}");
-            
+            Console.WriteLine($" {Globals.XSteps} , {Globals.YSteps} , {Globals.ZSteps} ; {Globals.TotalNumberOfPoints} ; \n {Globals.Xinc} , {Globals.Yinc} , {Globals.Zinc} \n  {Globals.X} , {Globals.Y} , {Globals.Z}");
+            File.WriteAllText(Globals.n, "aaa");
             CoordinateCreator();
-
-            CenterPointCreator();
+            if (Globals.XSteps > 2 && Globals.YSteps > 2){CenterPointCreator();}
             Corners();
-
-            if (Globals.XSteps > 2 && Globals.YSteps > 2 ) 
-            {
-                FronBackMidSurface();                      
-            }
-            if (Globals.YSteps > 2 && Globals.ZSteps > 2)
-            {                
-                LeftRightMidSurface();               
-            }
-            if (Globals.XSteps > 2 && Globals.YSteps > 2 && Globals.ZSteps > 2)
-            {
-                BottomUpMidSurface();
-            }
-            if ( Globals.ZSteps > 2)
-            {
-               DepthEdges();
-            }
-            if (Globals.XSteps > 2 )
-            {
-                HorizontalEdges();
-            }
-            if ( Globals.YSteps > 2 )
-            {
-               VerticalEdges();
-            } 
+            if (Globals.XSteps > 2 && Globals.YSteps > 2 ){FronBackMidSurface();}
+            if (Globals.YSteps > 2 && Globals.ZSteps > 2){LeftRightMidSurface();}
+            if (Globals.XSteps > 2 && Globals.YSteps > 2 && Globals.ZSteps > 2){BottomUpMidSurface();}
+            if (Globals.ZSteps > 2){DepthEdges();}
+            if (Globals.XSteps > 2){HorizontalEdges();}
+            if (Globals.YSteps > 2){VerticalEdges();} 
             ExecuHelper();
             
         }
         // Csv 2 File equivalent to Coordinate Points Hinges
         private static void CoordinateCreator()
-        {
-            string filePath2 = $@"{Globals.filePath2}{Globals.verzion}.csv";  // Thats CSV2 locations
-
+        {            
             // Creating Coordinate Points
-            using FileStream fs0 = new FileStream(filePath2, FileMode.Append);
+            using FileStream fs0 = new FileStream(Globals.filePath2, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs0);
                 {
@@ -138,9 +128,9 @@ namespace GrouındCreaTOR
         // Corners of Ground Structure
         private static void Corners() 
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
                  //  Corners 7 operations
-            using FileStream fs5 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs5 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs5);
                 {
@@ -274,8 +264,8 @@ namespace GrouındCreaTOR
         //  Inner Point 26 operation
         private static void CenterPointCreator() 
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
-            using FileStream fs4 = new FileStream(filePath1, FileMode.Append);
+            
+            using FileStream fs4 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs4);
                 {
@@ -354,9 +344,9 @@ namespace GrouındCreaTOR
         // Surfaces
         private static void FronBackMidSurface() 
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
             //  Front - Back Surface Mid 17 operations
-            using FileStream fs6 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs6 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs6);
                 {
@@ -373,7 +363,7 @@ namespace GrouındCreaTOR
                     int plane = 2;
                                         
 
-                    Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX);
+                    //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX);
 
 
                     // Selecting Centor Points
@@ -388,13 +378,13 @@ namespace GrouındCreaTOR
                             {
                                 grid[i, j, k] = SurfaceStart;
                                 SurfaceStart++;
-                                Console.Write(grid[i, j, k] + " ; ");
+                                //Console.Write(grid[i, j, k] + " ; ");
                             }
                             SurfaceStart += 2;
-                            Console.WriteLine(" After First Plans ist over =  " + SurfaceStart);
+                            //Console.WriteLine(" After First Plans ist over =  " + SurfaceStart);
                         }
                         SurfaceStart = (grid[0, 0, 0] + Zinc);
-                        Console.WriteLine(" PlaneCompleted and next Plane start point defined");
+                        //Console.WriteLine(" PlaneCompleted and next Plane start point defined");
                     }
 
                     // Creating every possible beam from inner points
@@ -407,8 +397,8 @@ namespace GrouındCreaTOR
                             {
                                 if (a == 0)
                                 {
-                                    int oneD = grid[a, b, c] + X;
-                                    Console.WriteLine(grid[a, b, c] + ";" + oneD + ";" + givenDiameter + ";" + givenForce);
+                                   // int oneD = grid[a, b, c] + X;
+                                   // Console.WriteLine(grid[a, b, c] + ";" + oneD + ";" + givenDiameter + ";" + givenForce);
                                     int one = grid[a, b, c] + X; string fullText1 = (grid[a, b, c] + ";" + one + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two = grid[a, b, c] + Y; string fullText2 = (grid[a, b, c] + ";" + two + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[a, b, c] + Z; string fullText3 = (grid[a, b, c] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -478,9 +468,9 @@ namespace GrouındCreaTOR
         }
         private static void LeftRightMidSurface()
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+          
             //  Left - Right Surface Mid 17 operations
-            using FileStream fs7 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs7 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs7);
                 {
@@ -594,9 +584,9 @@ namespace GrouındCreaTOR
         }
         private static void BottomUpMidSurface()
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
             //  Bottom - Up Surface Mid 17 operations
-            using FileStream fs8 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs8 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs8);
                 {
@@ -624,7 +614,7 @@ namespace GrouındCreaTOR
                                 grid[i, j, k] = SurfaceStart;
                                 SurfaceStart++;
 
-                                Console.Write(grid[i, j, k] + " ; ");
+                                //Console.Write(grid[i, j, k] + " ; ");
                             }
                             SurfaceStart += Z - Xinc +1;                    
                         }
@@ -708,9 +698,9 @@ namespace GrouındCreaTOR
         // Edges
         private static void DepthEdges()
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
             // Horizontal Edges 11 operations
-            using FileStream fs10 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs10 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs10);
                 {
@@ -739,15 +729,15 @@ namespace GrouındCreaTOR
                             {
                                 grid[i, j, k] = corfaceStart;
                                 corfaceStart += Yinc;
-                                Console.Write(grid[i, j, k] + " ; ");
+                               // Console.Write(grid[i, j, k] + " ; ");
                             }
                             //corfaceStart += (YSteps - 2) * Y + 2;
-                            Console.WriteLine(" BEFORE operation =  " + Z);
+                            //Console.WriteLine(" BEFORE operation =  " + Z);
                             corfaceStart = corfaceStart + Z + (-2 * Yinc);
-                            Console.WriteLine(" Corface First Plane is over =  " + corfaceStart);
+                           // Console.WriteLine(" Corface First Plane is over =  " + corfaceStart);
                         }
                         corfaceStart = (grid[0, 0, 0] + Xinc);
-                        Console.WriteLine(" Corface Front Back Bottom Up is done");
+                        //Console.WriteLine(" Corface Front Back Bottom Up is done");
                     }
 
                     // Creating every possible beam from inner points
@@ -885,9 +875,9 @@ namespace GrouındCreaTOR
         }
         private static void HorizontalEdges()
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
             //  Depth Edges 11 operations
-            using FileStream fs9 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs9 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs9);
                 {
@@ -1063,9 +1053,9 @@ namespace GrouındCreaTOR
         }
         private static void VerticalEdges()
         {
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";
+            
             //  Vertical Edges 11 operations
-            using FileStream fs11 = new FileStream(filePath1, FileMode.Append);
+            using FileStream fs11 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs11);
                 {
@@ -1094,14 +1084,14 @@ namespace GrouındCreaTOR
                             {
                                 grid[i, j, k] = corfaceStart;
                                 corfaceStart += Y;
-                                Console.Write(grid[i, j, k] + " ; ");
+                                //Console.Write(grid[i, j, k] + " ; ");
                             }
 
                             corfaceStart += Xinc - (rowY * Y);
-                            Console.WriteLine("Corface First Plane is over =  " + corfaceStart);
+                            //Console.WriteLine("Corface First Plane is over =  " + corfaceStart);
                         }
                         corfaceStart = (grid[0, 0, 0] + Zinc);
-                        Console.WriteLine("Corface Front Back Bottom Up is done");
+                        //Console.WriteLine("Corface Front Back Bottom Up is done");
                     }
 
                     // Creating every possible beam from inner points
@@ -1239,14 +1229,10 @@ namespace GrouındCreaTOR
 
         // Help File Creation
         private static void ExecuHelper()
-        {
-            string filePath = $@"{Globals.filePath}{Globals.verzion}.tex";      // Location anf Name of the Tex file
-            string filePath1 = $@"{Globals.filePath1}{Globals.verzion}.csv";    // CSV1
-            string filePath2 = $@"{Globals.filePath2}{Globals.verzion}.csv";    // CSV2
-            string filePath3 = $@"{Globals.filePath3}{Globals.verzion}.csv";    // Helper
-            string filePathTarget = $@"{Globals.filePathTarget}";
-
-            using FileStream fs12 = new FileStream(filePath3, FileMode.Append);
+        {         
+           
+   
+            using FileStream fs12 = new FileStream(Globals.filePath3, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs12);
                 {
@@ -1272,6 +1258,8 @@ namespace GrouındCreaTOR
 
                     sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {numberOfLoads}");
 
+
+                    // Allocation of Loads
                     for (int j = 0; j < plane; j++)
                     {
                         for (int k = 0; k < columnX; k++)
@@ -1284,12 +1272,13 @@ namespace GrouındCreaTOR
                         topSurfStart += Yinc;
                     }
 
+                    // Assigning the same size-value for each Load
                     for (int k = 0; k < XSteps * ZSteps; k++)
                     {
                         sw.Write($" {valueForce}");
                     }
 
-                    sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {filePath} {filePath1} {filePath2} {filePathTarget}");
+                    sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePath} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget}");
 
                     /* CreateTex.exe <X> < Y > < Z > < distance nodes > < amount bearings > << position of bearings>> 
                      * < amount forces > << position forces >> << value forces >> < visual scaling hight forces > < visual scaling width forces > < visual scaling beams>
