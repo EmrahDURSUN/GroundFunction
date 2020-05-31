@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
@@ -8,36 +8,35 @@ namespace GrouındCreaTOR
     class Program
     {
         private const int givenDiameter = 1;
-        private const int givenForce = 100;       
-        /// <summary>
-        ///  static class to hold global variables, etc
-        /// </summary>
+        private const int givenForce = 100;
+
+        // static class to hold global variables, etc.
+
         static class Globals
         {
-            /*Uncomment below if you want, the user to enter Dimentions
-            //Console.WriteLine("Enter width");
-            public static int XWidth = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter height");
-            public static int YHeight = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter depth");
-            public static int ZDepth = Convert.ToInt32(Console.In.ReadLine());
-            //Console.WriteLine("Enter Node Size");
-            public static int NodeSize = Convert.ToInt32(Console.In.ReadLine());
-            */
+            // Uncomment below if you want, the user to enter Dimentions
+            ////Console.WriteLine("Enter width");
+            //public static int XWidth = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter height");
+            //public static int YHeight = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter depth");
+            //public static int ZDepth = Convert.ToInt32(Console.In.ReadLine());
+            ////Console.WriteLine("Enter Node Size");
+            //public static int NodeSize = Convert.ToInt32(Console.In.ReadLine());
 
             // If user will enter dimentions, this four input must coment-out
             // global int
-            public static int XWidth = 160;
+            public static int XWidth = 60;
             public static int YHeight = 60;
-            public static int ZDepth = 100;
+            public static int ZDepth = 80;
             public static int NodeSize = 20;
 
             public static int X = 1;
             public static int XSteps = (XWidth + NodeSize) / NodeSize;
             public static int Y = XSteps;
-            public static int YSteps = ((YHeight + NodeSize) / NodeSize);            
+            public static int YSteps = ((YHeight + NodeSize) / NodeSize);
             public static int ZSteps = (ZDepth + NodeSize) / NodeSize;
-            public static int Z = YSteps * XSteps;            
+            public static int Z = YSteps * XSteps;
 
             public static int TotalNumberOfPoints = XSteps * YSteps * ZSteps;
 
@@ -46,8 +45,8 @@ namespace GrouındCreaTOR
             public static int Zinc = (ZSteps - 1) * Z;
 
             //string n = string.Format("text-{0:yyyy-MM-dd_hh-mm-ss-tt}.bin",DateTime.Now);File.WriteAllText(n, "aaa");
-            public static string n = string.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);           
-            
+            public static string n = string.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);
+
             /*
                    "text-{0:yyyy-MM-dd_hh-mm-ss-tt}.bin"
                    text-      The first part of the output required
@@ -95,20 +94,20 @@ namespace GrouındCreaTOR
             //File.WriteAllText(Globals.n, "aaa");
 
             CoordinateCreator();
-            if (Globals.XSteps > 2 && Globals.YSteps > 2){CenterPointCreator();}
+            if (Globals.XSteps > 2 && Globals.YSteps > 2) { CenterPointCreator(); }
             Corners();
-            if (Globals.XSteps > 2 && Globals.YSteps > 2 ){FronBackMidSurface();}
-            if (Globals.YSteps > 2 && Globals.ZSteps > 2){LeftRightMidSurface();}
-            if (Globals.XSteps > 2 && Globals.YSteps > 2 && Globals.ZSteps > 2){BottomUpMidSurface();}
-            if (Globals.ZSteps > 2){DepthEdges();}
-            if (Globals.XSteps > 2){HorizontalEdges();}
-            if (Globals.YSteps > 2){VerticalEdges();} 
+            if (Globals.XSteps > 2 && Globals.YSteps > 2) { FronBackMidSurface(); }
+            if (Globals.YSteps > 2 && Globals.ZSteps > 2) { LeftRightMidSurface(); }
+            if (Globals.XSteps > 2 && Globals.YSteps > 2 && Globals.ZSteps > 2) { BottomUpMidSurface(); }
+            if (Globals.ZSteps > 2) { DepthEdges(); }
+            if (Globals.XSteps > 2) { HorizontalEdges(); }
+            if (Globals.YSteps > 2) { VerticalEdges(); }
             ExecuHelper();
-            
+
         }
         // Csv 2 File equivalent to Coordinate Points Hinges
         private static void CoordinateCreator()
-        {            
+        {
             // Creating Coordinate Points
             using FileStream fs0 = new FileStream(Globals.filePath2, FileMode.Append);
             {
@@ -117,7 +116,7 @@ namespace GrouındCreaTOR
                     int X = Globals.X; int XSteps = Globals.XSteps; int Xinc = Globals.Xinc;
                     int Y = Globals.Y; int YSteps = Globals.YSteps; int Yinc = Globals.Yinc;
                     int Z = Globals.Z; int ZSteps = Globals.ZSteps; int Zinc = Globals.Zinc;
-                    int NodeSize = Globals.NodeSize;                 
+                    int NodeSize = Globals.NodeSize;
 
                     int[,,] grid = new int[ZSteps, YSteps, XSteps];
 
@@ -143,13 +142,11 @@ namespace GrouındCreaTOR
             }
         }
 
-        /// <summary>
-        /// Corners and their connections
-        /// </summary>
-        private static void Corners() 
+        // Corners of Ground Structure
+        private static void Corners()
         {
-            
-                 //  Corners 7 operations
+
+            //  Corners 7 operations
             using FileStream fs5 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs5);
@@ -165,7 +162,7 @@ namespace GrouındCreaTOR
                     int rowY = YSteps;
                     int columnX = XSteps;
                     int plane = ZSteps;
-                   
+
                     // Selecting Corner Points
                     int[,,] grid = new int[plane, rowY, columnX];
                     for (int i = 0; i < plane; i++)
@@ -212,7 +209,7 @@ namespace GrouındCreaTOR
 
                                 if (grid[i, j, k] == YSteps * XSteps) // Front Right Up
                                 {
-                                  //  Console.WriteLine($" be care fulllllllllllllllllll   =  {grid[i, j, k]}  ");
+                                    //  Console.WriteLine($" be care fulllllllllllllllllll   =  {grid[i, j, k]}  ");
                                     // X = (X * (-1)); Y = (Y * (-1));
                                     int first = grid[i, j, k] - X; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two = grid[i, j, k] - Y; string fullText2 = (grid[i, j, k] + ";" + two + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
@@ -226,7 +223,7 @@ namespace GrouındCreaTOR
                                 if (grid[i, j, k] == Zinc + 1) // Back Left Down
                                 {
                                     // Z = (Z * (-1));
-                                   // Console.WriteLine($" Back Left Down  =  {grid[i, j, k]}  ");
+                                    // Console.WriteLine($" Back Left Down  =  {grid[i, j, k]}  ");
                                     int first = grid[i, j, k] + X; string fullText1 = (grid[i, j, k] + ";" + first + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two = grid[i, j, k] + Y; string fullText2 = (grid[i, j, k] + ";" + two + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[i, j, k] - Z; string fullText3 = (grid[i, j, k] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -280,14 +277,11 @@ namespace GrouındCreaTOR
                 }
             }
         }
-        
-        /// <summary>
-        /// This Function is first calculates what are the inner points.
-        /// Then their 26 connections to neighbor points written down to CSV file
-        /// </summary>
-        private static void CenterPointCreator() 
+
+        //  Inner Point 26 operation
+        private static void CenterPointCreator()
         {
-            
+
             using FileStream fs4 = new FileStream(Globals.filePath1, FileMode.Append);
             {
                 using StreamWriter sw = new StreamWriter(fs4);
@@ -299,9 +293,9 @@ namespace GrouındCreaTOR
 
                     int CenterStart = XSteps * (YSteps + 1) + 2;
 
-                    int rowY    = YSteps - 2;
+                    int rowY = YSteps - 2;
                     int columnX = XSteps - 2;
-                    int plane   = ZSteps - 2;
+                    int plane = ZSteps - 2;
 
                     // Selecting Inner Points
                     int[,,] grid = new int[plane, rowY, columnX];
@@ -314,7 +308,7 @@ namespace GrouındCreaTOR
                             for (int k = 0; k < columnX; k++)
                             {
                                 grid[i, j, k] = CenterStart;
-                                CenterStart++;                                
+                                CenterStart++;
                             }
                             CenterStart += 2;
                         }
@@ -361,15 +355,13 @@ namespace GrouındCreaTOR
                         }
                     }
                 }
-            }      
+            }
         }
 
-        /// <summary>
-        /// Calculates Front and Back Surface Points & Their connection to neighbor points
-        /// </summary>
-        private static void FronBackMidSurface() 
+        // Surfaces
+        private static void FronBackMidSurface()
         {
-            
+
             //  Front - Back Surface Mid 17 operations
             using FileStream fs6 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -386,7 +378,7 @@ namespace GrouındCreaTOR
                     int columnX = XSteps - 2;
                     int rowY = YSteps - 2;
                     int plane = 2;
-                                        
+
 
                     //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX);
 
@@ -422,8 +414,8 @@ namespace GrouındCreaTOR
                             {
                                 if (a == 0)
                                 {
-                                   // int oneD = grid[a, b, c] + X;
-                                   // Console.WriteLine(grid[a, b, c] + ";" + oneD + ";" + givenDiameter + ";" + givenForce);
+                                    // int oneD = grid[a, b, c] + X;
+                                    // Console.WriteLine(grid[a, b, c] + ";" + oneD + ";" + givenDiameter + ";" + givenForce);
                                     int one = grid[a, b, c] + X; string fullText1 = (grid[a, b, c] + ";" + one + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText1);
                                     int two = grid[a, b, c] + Y; string fullText2 = (grid[a, b, c] + ";" + two + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText2);
                                     int three = grid[a, b, c] + Z; string fullText3 = (grid[a, b, c] + ";" + three + ";" + givenDiameter + ";" + givenForce); sw.WriteLine(fullText3);
@@ -493,7 +485,7 @@ namespace GrouındCreaTOR
         }
         private static void LeftRightMidSurface()
         {
-          
+
             //  Left - Right Surface Mid 17 operations
             using FileStream fs7 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -504,14 +496,14 @@ namespace GrouındCreaTOR
                     int Z = Globals.Z; int ZSteps = Globals.ZSteps; int Zinc = Globals.Zinc;
                     int NodeSize = Globals.NodeSize;
 
-                    int SurfaceStart = 1 + Y+ Z;
+                    int SurfaceStart = 1 + Y + Z;
 
 
                     // Important this time direction goes to Z
                     int columnZ = ZSteps - 2;
                     int rowY = YSteps - 2;
-                    int plane = 2;              
-                    
+                    int plane = 2;
+
                     // Console.WriteLine("\n" + " Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnZ + "\n");
 
                     // Selecting Centor Points
@@ -525,12 +517,12 @@ namespace GrouındCreaTOR
                             {
                                 grid[i, j, k] = SurfaceStart;
                                 SurfaceStart += Y;
-                               
+
                                 //Console.Write(grid[i, j, k] + " ; ");
                             }
-                            SurfaceStart += (2 * Y);                          
+                            SurfaceStart += (2 * Y);
                         }
-                        SurfaceStart = (grid[0, 0, 0] + Xinc);                      
+                        SurfaceStart = (grid[0, 0, 0] + Xinc);
                     }
 
                     // Creating every possible beam from inner points
@@ -546,17 +538,17 @@ namespace GrouındCreaTOR
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
@@ -565,36 +557,36 @@ namespace GrouındCreaTOR
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
                                 }
 
                                 if (a == 1)
                                 { // Delete All +X
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
+                                  //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
-                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
-                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                    //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                    //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
@@ -609,7 +601,7 @@ namespace GrouındCreaTOR
         }
         private static void BottomUpMidSurface()
         {
-            
+
             //  Bottom - Up Surface Mid 17 operations
             using FileStream fs8 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -624,7 +616,7 @@ namespace GrouındCreaTOR
 
                     int columnX = XSteps - 2;
                     int rowZ = ZSteps - 2;
-                    int plane = 2;                   
+                    int plane = 2;
 
                     // Selecting Centor Points
 
@@ -641,7 +633,7 @@ namespace GrouındCreaTOR
 
                                 //Console.Write(grid[i, j, k] + " ; ");
                             }
-                            SurfaceStart += Z - Xinc +1;                    
+                            SurfaceStart += Z - Xinc + 1;
                         }
                         SurfaceStart = (grid[0, 0, 0] + Yinc); // Upper level
                     }
@@ -660,56 +652,56 @@ namespace GrouındCreaTOR
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
-                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
+                                    //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
                                 }
 
                                 if (a == 1)
                                 {
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X          };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Z          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y          };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Z          };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y      };{givenDiameter};{givenForce}");
-                                //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
+                                    //   sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y + Z      };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + Y - Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y + Z      };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - Y - Z      };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X + Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] + X - Y - Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
-                                //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y + Z  };{givenDiameter};{givenForce}");
+                                    //    sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X + Y - Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y + Z  };{givenDiameter};{givenForce}");
                                     sw.WriteLine($"{grid[a, b, c]};{ grid[a, b, c] - X - Y - Z  };{givenDiameter};{givenForce}");
                                 }
@@ -720,12 +712,10 @@ namespace GrouındCreaTOR
             }
         }
 
-        /// <summary>
-        /// Calculates Edge Points locations and connections
-        /// </summary>
+        // Edges
         private static void DepthEdges()
         {
-            
+
             // Horizontal Edges 11 operations
             using FileStream fs10 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -756,12 +746,12 @@ namespace GrouındCreaTOR
                             {
                                 grid[i, j, k] = corfaceStart;
                                 corfaceStart += Yinc;
-                               // Console.Write(grid[i, j, k] + " ; ");
+                                // Console.Write(grid[i, j, k] + " ; ");
                             }
                             //corfaceStart += (YSteps - 2) * Y + 2;
                             //Console.WriteLine(" BEFORE operation =  " + Z);
                             corfaceStart = corfaceStart + Z + (-2 * Yinc);
-                           // Console.WriteLine(" Corface First Plane is over =  " + corfaceStart);
+                            // Console.WriteLine(" Corface First Plane is over =  " + corfaceStart);
                         }
                         corfaceStart = (grid[0, 0, 0] + Xinc);
                         //Console.WriteLine(" Corface Front Back Bottom Up is done");
@@ -902,7 +892,7 @@ namespace GrouındCreaTOR
         }
         private static void HorizontalEdges()
         {
-            
+
             //  Depth Edges 11 operations
             using FileStream fs9 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -1080,7 +1070,7 @@ namespace GrouındCreaTOR
         }
         private static void VerticalEdges()
         {
-            
+
             //  Vertical Edges 11 operations
             using FileStream fs11 = new FileStream(Globals.filePath1, FileMode.Append);
             {
@@ -1253,16 +1243,12 @@ namespace GrouındCreaTOR
                 }
             }
         }
-        
-        /// <summary>
-        /// Create a helper CSV file for easy creation of tex file
-        /// </summary>
+
+        // Help File Creation
         private static void ExecuHelper()
-        {                       
-            using FileStream fs12 = new FileStream(Globals.filePath3, FileMode.Append);
+        {
+            using StreamWriter sw = new StreamWriter(new FileStream(Globals.filePath3, FileMode.Append));
             {
-                using StreamWriter sw = new StreamWriter(fs12);
-                {
                     int X = Globals.X; int XSteps = Globals.XSteps; int Xinc = Globals.Xinc;
                     int Y = Globals.Y; int YSteps = Globals.YSteps; int Yinc = Globals.Yinc;
                     int Z = Globals.Z; int ZSteps = Globals.ZSteps; int Zinc = Globals.Zinc;
@@ -1274,11 +1260,11 @@ namespace GrouındCreaTOR
                     int rowY = YSteps;
                     int plane = ZSteps;
 
-                    int valueForce = 4, scalingHightForces = 3, scalingWidthForcesi = 3, scalingBeams = 3;
+                    int scalingHightForces = 3, scalingWidthForcesi = 3, scalingBeams = 3;
 
 
                     //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
-                    
+
                     int[,] grid = new int[plane, columnX];
 
                     int numberOfLoads = XSteps * ZSteps;
@@ -1286,29 +1272,54 @@ namespace GrouındCreaTOR
                     //CreateTex.exe <X> < Y > < Z > < distance nodes > < amount bearings > << position of bearings>>    < amount forces >     
 
                     sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {numberOfLoads}");
-
-                   
-                    for (int j = 0; j < plane; j++)
-                    {
-                        for (int k = 0; k < columnX; k++)
-                        {
-                            grid[j, k] = topSurfStart;
-                            topSurfStart++;
-
-                            sw.Write($" P{grid[j, k]}");  //         << position forces >> 
-                        }
-                        topSurfStart += Yinc;
-                    }
-                    // Assigning the same size-value for each Load     
-                    for (int k = 0; k < numberOfLoads; k++)
-                    {
-                        sw.Write($" {valueForce}");     //      << value forces >>
-                    }    
-
-                     //        < visual scaling hight forces > < visual scaling width forces > < visual scaling beams> < path tex file> < path csv1 > < path csv2 > < path workingDirectory >
-                     sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePath} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget}");                    
-                }
+                    sw.Close();                
+                            
+                    
+                    //        < visual scaling hight forces > < visual scaling width forces > < visual scaling beams> < path tex file> < path csv1 > < path csv2 > < path workingDirectory >
+                    sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePath} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget}");
             }
         }
     }
+
+        private static void TopSurfaceAllLoad()
+        {
+            using StreamWriter sw = new StreamWriter(new FileStream(Globals.filePath3, FileMode.Append));
+            {
+                int X = Globals.X; int XSteps = Globals.XSteps; int Xinc = Globals.Xinc;
+                int Y = Globals.Y; int YSteps = Globals.YSteps; int Yinc = Globals.Yinc;
+                int Z = Globals.Z; int ZSteps = Globals.ZSteps; int Zinc = Globals.Zinc;
+                int NodeSize = Globals.NodeSize;
+                int topSurfStart = Yinc + 1;
+                int columnX = XSteps;
+                int rowY = YSteps;
+                int plane = ZSteps;
+
+                int valueForce = 4;
+
+                int[,] grid = new int[plane, columnX];
+                int numberOfLoads = XSteps * ZSteps;
+
+                // Allocation of Loads For All Top Surface  
+                for (int j = 0; j < plane; j++)
+                {
+                    for (int k = 0; k < columnX; k++)
+                    {
+                        grid[j, k] = topSurfStart;
+                        topSurfStart++;
+                        sw.Write($" P{grid[j, k]}");  //   write grid location      << position forces >> 
+                    }
+                    topSurfStart += Yinc;
+                }
+
+                // Assigning the same size-value for each Load     
+                for (int k = 0; k < numberOfLoads; k++)
+                {
+                    sw.Write($" {valueForce}");     //     write it down to csv      << value forces >>
+                }
+            }
+
+
+        }
+
+    }    
 }
