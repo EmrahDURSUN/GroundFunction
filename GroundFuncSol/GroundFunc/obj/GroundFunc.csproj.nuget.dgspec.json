@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\B\\GroundFuntion\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj": {}
+    "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj": {}
   },
   "projects": {
-    "E:\\B\\GroundFuntion\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj": {
+    "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\B\\GroundFuntion\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj",
+        "projectUniqueName": "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj",
         "projectName": "GroundFunc",
-        "projectPath": "E:\\B\\GroundFuntion\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj",
+        "projectPath": "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj",
         "packagesPath": "C:\\Users\\emrah\\.nuget\\packages\\",
-        "outputPath": "E:\\B\\GroundFuntion\\GroundFuncSol\\GroundFunc\\obj\\",
+        "outputPath": "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\emrah\\AppData\\Roaming\\NuGet\\NuGet.Config",

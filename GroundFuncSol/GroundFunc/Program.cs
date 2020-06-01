@@ -14,6 +14,8 @@ namespace GrouındCreaTOR
         /// </summary>
         static class Globals
         {
+            // What if i change SOMEThings
+
             /*Uncomment below if you want, the user to enter Dimentions
             //Console.WriteLine("Enter width");
             public static int XWidth = Convert.ToInt32(Console.In.ReadLine());
