@@ -84,10 +84,10 @@ namespace GrouındCreaTOR
             public static string filePathTarget = $@"{filePath}";
 
             // global function
-            public static string HelloWorld()
+            public static string HelloTOR()
             {
                 //Console.WriteLine(SpecialFileName);
-                return "Hello Hennrick";
+                return "Hello TOR";
             }
         }
 
