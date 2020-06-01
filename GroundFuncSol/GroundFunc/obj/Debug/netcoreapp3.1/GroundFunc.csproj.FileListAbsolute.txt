@@ -11,3 +11,16 @@ E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.A
 E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.dll
 E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.pdb
 E:\B\GroundFuntion\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.genruntimeconfig.cache
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.exe
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.deps.json
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.runtimeconfig.json
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.runtimeconfig.dev.json
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.dll
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\bin\Debug\netcoreapp3.1\GroundFunc.pdb
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.csprojAssemblyReference.cache
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.csproj.CoreCompileInputs.cache
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.AssemblyInfoInputs.cache
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.AssemblyInfo.cs
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.dll
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.pdb
+C:\Users\emrah\Documents\00 Space Code\GroundFunction\GroundFuncSol\GroundFunc\obj\Debug\netcoreapp3.1\GroundFunc.genruntimeconfig.cache

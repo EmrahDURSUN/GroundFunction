@@ -29,7 +29,7 @@ namespace GrouındCreaTOR
 
             // If user will enter dimentions, this four input must coment-out
             // global int
-            public static int XWidth = 160;
+            public static int XWidth = 100;
             public static int YHeight = 60;
             public static int ZDepth = 100;
             public static int NodeSize = 20;
@@ -78,6 +78,7 @@ namespace GrouındCreaTOR
             public static string filePath = $@"E:\\A\\P1\\Latex\\";
             public static string verzion = $"{XWidth}_{YHeight}_{ZDepth}";
 
+            public static string filePathTex = $@"{filePath}{n}_{verzion}.tex";
             public static string filePath1 = $@"{filePath}{n}_{verzion}_csv1.csv";    // CSV1
             public static string filePath2 = $@"{filePath}{n}_{verzion}_csv2.csv";    // CSV2
             public static string filePath3 = $@"{filePath}{n}_{verzion}_csv3Helper.csv";    // Helper
@@ -1308,7 +1309,7 @@ namespace GrouındCreaTOR
                     }    
 
                      //        < visual scaling hight forces > < visual scaling width forces > < visual scaling beams> < path tex file> < path csv1 > < path csv2 > < path workingDirectory >
-                     sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePath} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget}");                    
+                     sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePathTex} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget} \n {Globals.filePathTex} ");                    
                 }
             }
         }
