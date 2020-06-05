@@ -29,10 +29,10 @@ namespace GrouındCreaTOR
 
             // If user will enter dimentions, this four input must coment-out
             // global int
-            public static int XWidth = 100;
-            public static int YHeight = 60;
-            public static int ZDepth = 100;
-            public static int NodeSize = 20;
+            public static int XWidth = 90;
+            public static int YHeight = 20;
+            public static int ZDepth = 90;
+            public static int NodeSize = 5;
 
             public static int X = 1;
             public static int XSteps = (XWidth + NodeSize) / NodeSize;
@@ -94,7 +94,7 @@ namespace GrouındCreaTOR
 
         static void Main(string[] args)
         {
-            //Console.WriteLine($" {Globals.XSteps} , {Globals.YSteps} , {Globals.ZSteps} ; {Globals.TotalNumberOfPoints} ; \n {Globals.Xinc} , {Globals.Yinc} , {Globals.Zinc} \n  {Globals.X} , {Globals.Y} , {Globals.Z}");
+            Console.WriteLine($" {Globals.XSteps} , {Globals.YSteps} , {Globals.ZSteps} ; {Globals.TotalNumberOfPoints} ; \n Xinc ={Globals.Xinc} , Yinc = {Globals.Yinc} , Zinc = {Globals.Zinc} \n  {Globals.X} , {Globals.Y} , {Globals.Z}");
             //File.WriteAllText(Globals.n, "aaa");
 
             CoordinateCreator();
@@ -1271,26 +1271,25 @@ namespace GrouındCreaTOR
                     int Z = Globals.Z; int ZSteps = Globals.ZSteps; int Zinc = Globals.Zinc;
                     int NodeSize = Globals.NodeSize;
 
-                    int topSurfStart = Yinc + 1;
+                    int topSurfStart = 1 + Yinc + ( 2 * Z ) + 2;
+                    
 
-                    int columnX = XSteps;
+                    int columnX = XSteps-4; // ignoring the side nodes by adding -4
                     int rowY = YSteps;
-                    int plane = ZSteps;
+                    int plane = ZSteps-4;
 
                     int valueForce = 4, scalingHightForces = 3, scalingWidthForcesi = 3, scalingBeams = 3;
-
-
-                    //Console.WriteLine(" Number of Planes = " + plane + " Rows = " + rowY + " Columns = " + columnX );
-                    
+                                                            
                     int[,] grid = new int[plane, columnX];
-
-                    int numberOfLoads = XSteps * ZSteps;
+                   
+                    int numberOfLoads = columnX * plane;
 
                     //CreateTex.exe <X> < Y > < Z > < distance nodes > < amount bearings > << position of bearings>>    < amount forces >     
 
-                    sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {numberOfLoads}");
+                    sw.Write($"CreateTex.exe {XSteps} {YSteps} {ZSteps} {NodeSize} 4 P{1} P{1 + Xinc} P{1 + Zinc} P{1 + Xinc + Zinc} {numberOfLoads}");                  
 
-                   
+
+
                     for (int j = 0; j < plane; j++)
                     {
                         for (int k = 0; k < columnX; k++)
@@ -1300,7 +1299,7 @@ namespace GrouındCreaTOR
 
                             sw.Write($" P{grid[j, k]}");  //         << position forces >> 
                         }
-                        topSurfStart += Yinc;
+                        topSurfStart += (Z - columnX);   // pass to next plane and step back to beginning
                     }
                     // Assigning the same size-value for each Load     
                     for (int k = 0; k < numberOfLoads; k++)
@@ -1309,7 +1308,58 @@ namespace GrouındCreaTOR
                     }    
 
                      //        < visual scaling hight forces > < visual scaling width forces > < visual scaling beams> < path tex file> < path csv1 > < path csv2 > < path workingDirectory >
-                     sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePathTex} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget} \n {Globals.filePathTex} ");                    
+                     sw.Write($" {scalingHightForces} {scalingWidthForcesi} {scalingBeams} {Globals.filePathTex} {Globals.filePath1} {Globals.filePath2} {Globals.filePathTarget} \n {Globals.filePathTex} \n ");
+
+                    // Cross Support Loads
+
+                    int[] support1 = new int[5]; int supStart = 1 + (3 * Z) + 3;
+                    int[] support2 = new int[5]; int supEnd = XSteps + (3 * Z) - 3;
+                    string supportColor = "yellow";
+                    int supportSize = -3;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        support1[j] = supStart;
+                        support2[j] = supEnd;
+                        supStart = supStart + (3 * Z) + 3;
+                        supEnd = supEnd + (3 * Z) - 3;
+                        if (support1[j] != support2[j])
+                        {
+                            sw.Write("\\dload{1}{P" + support1[j] + "}[00][00][" + supportSize + "][0.15][1][" + supportColor + "];\n");  //         << position cross support>> 
+                            sw.Write("\\dload{1}{P" + support2[j] + "}[00][00][" + supportSize + "][0.15][1][" + supportColor + "];\n");
+                        }
+                        if (support1[j] == support2[j])
+                        {
+                            sw.Write("\\dload{1}{P" + support1[j] + "}[00][00][" + supportSize + "][0.15][1][" + supportColor + "];\n");  //         << position cross support>>                             
+                        }
+                    }
+
+                    // Red Corner Loads    
+                    // \dload{ 2}{ P31}[00][00][5][0.15][5][blue];
+                    int[] load1 = new int[XSteps-4];
+                    int loadStart = 1+ Yinc + Z + 3;
+                    int[] load2 = new int[ZSteps-4]; 
+                    int loadEnd = 1 + Yinc + (3 * Z) + 1;
+                    string sideLoadColor = "red";
+                    int sideLoadSize = 2;
+
+                    for (int j = 0; j < 2; j++)
+                    {
+                        for (int k = 0; k < XSteps-6; k++)
+                        {
+                            load1[k] = loadStart;
+                            loadStart++;
+                            load2[k] = loadEnd;
+                            loadEnd += Z;
+                            sw.Write("\\dload{1}{P" + load1[k] + "}[00][00][" + sideLoadSize + "][0.15][1][" + sideLoadColor + "];\n");
+                            sw.Write("\\dload{1}{P" + load2[k] + "}[00][00][" + sideLoadSize + "][0.15][1][" + sideLoadColor + "];\n");
+                            
+                        }
+                        loadStart = loadStart - (XSteps - 5) + Zinc - (3 * Z);   // pass to next plane and step back to beginning
+                        loadEnd = loadEnd - (Zinc - (5*Z)) + XSteps - 3; 
+                    }
+                    // Assigning the same size-value for each Load                         
+
                 }
             }
         }
