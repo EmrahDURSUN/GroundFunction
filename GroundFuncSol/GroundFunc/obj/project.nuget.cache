@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1SZ7VP8CFVK6V+ddlAiilUGOTJOt5gAlqIiEKojzT6IQ0D68dzLbWvFXi5g5JtNstizz9i5BlAw1zWj1i0yyzQ==",
+  "dgSpecHash": "zRVyAWgPVUaJ/K3YhgEYg0+a7WESHslJUCLZlvjXbyxqzGYKGIhD8nkynsN6p7QSU7I/ktkpauHnMOkhjiu7zw==",
   "success": true,
   "projectFilePath": "C:\\Users\\emrah\\Documents\\00 Space Code\\GroundFunction\\GroundFuncSol\\GroundFunc\\GroundFunc.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\emrah\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
   "logs": []
 }
